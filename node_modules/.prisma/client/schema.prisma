@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categoria {
+  id      Int       @id @default(autoincrement())
+  nome    String    @unique @db.VarChar(150)
+  produtos produto[]
+}
+
+model compra {
+  id        Int       @id @default(autoincrement())
+  anotacao  String?   @db.VarChar(255)
+  createdat DateTime? @db.Timestamp(6)
+  updatedat DateTime? @db.Timestamp(6)
+  itens      item[]
+}
+
+model item {
+  id                    Int      @id @default(autoincrement())
+  quantidade            Int
+  preco                 Decimal? @db.Decimal
+  unidade               String   @db.VarChar(50)
+  foto                  String?  @db.VarChar(150)
+  produto               Int
+  compra                Int
+  compra_compraToitem   compra   @relation(fields: [compra], references: [id])
+  produto_itemToproduto produto  @relation(fields: [produto], references: [id])
+}
+
+model produto {
+  id                           Int       @id @default(autoincrement())
+  nome                         String    @unique @db.VarChar(150)
+  foto                         String?   @db.VarChar(150)
+  categoria                    Int
+  categoria_categoriaToproduto categoria @relation(fields: [categoria], references: [id])
+  itens                         item[]
+}
