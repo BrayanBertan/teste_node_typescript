@@ -8,17 +8,19 @@ datasource db {
 }
 
 model categoria {
-  id      Int       @id @default(autoincrement())
-  nome    String    @unique @db.VarChar(150)
+  id       Int       @id @default(autoincrement())
+  nome     String    @unique @db.VarChar(150)
+  usuario  Int
   produtos produto[]
 }
 
 model compra {
   id        Int       @id @default(autoincrement())
   anotacao  String?   @db.VarChar(255)
-  createdat DateTime? @db.Timestamp(6)
-  updatedat DateTime? @db.Timestamp(6)
-  itens      item[]
+  usuario   Int
+  createdat DateTime? @default(now()) @db.Timestamp(6)
+  updatedat DateTime? @default(now()) @db.Timestamp(6)
+  itens     item[]
 }
 
 model item {
@@ -37,7 +39,16 @@ model produto {
   id                           Int       @id @default(autoincrement())
   nome                         String    @unique @db.VarChar(150)
   foto                         String?   @db.VarChar(150)
+  usuario                      Int
   categoria                    Int
   categoria_categoriaToproduto categoria @relation(fields: [categoria], references: [id])
-  itens                         item[]
+  itens                        item[]
+}
+
+model usuario {
+  id    Int     @id @default(autoincrement())
+  nome  String? @db.VarChar(150)
+  login String  @unique @db.VarChar(150)
+  foto  String? @db.VarChar(150)
+  senha String  @db.VarChar(150)
 }

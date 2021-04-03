@@ -36,23 +36,101 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TEST = exports.breno = void 0;
+exports.getAllCompras = exports.createCompra = exports.getAllProdutos = exports.createProduto = exports.getAllCategorias = exports.createCategoria = void 0;
 var client_1 = require("@prisma/client");
 var prisma = new client_1.PrismaClient();
-function breno() {
+function createCategoria(categoria) {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
-            console.log('funfou');
-            return [2 /*return*/];
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prisma.categoria.create({
+                        data: {
+                            nome: categoria.trim().toUpperCase()
+                        }
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
         });
     });
 }
-exports.breno = breno;
-var TEST = function () {
+exports.createCategoria = createCategoria;
+var getAllCategorias = function () {
     return __awaiter(this, void 0, void 0, function () {
+        var allCategories;
         return __generator(this, function (_a) {
-            return [2 /*return*/, '5'];
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prisma.categoria.findMany()];
+                case 1:
+                    allCategories = _a.sent();
+                    return [2 /*return*/, allCategories];
+            }
         });
     });
 };
-exports.TEST = TEST;
+exports.getAllCategorias = getAllCategorias;
+function createProduto(produto) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prisma.produto.create({
+                        data: {
+                            categoria: produto.get('categoria'),
+                            nome: produto.get('nome').trim().toUpperCase(),
+                            foto: produto.get('foto')
+                        }
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createProduto = createProduto;
+var getAllProdutos = function () {
+    return __awaiter(this, void 0, void 0, function () {
+        var allProdutos;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prisma.produto.findMany()];
+                case 1:
+                    allProdutos = _a.sent();
+                    return [2 /*return*/, allProdutos];
+            }
+        });
+    });
+};
+exports.getAllProdutos = getAllProdutos;
+function createCompra(anotacao) {
+    return __awaiter(this, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prisma.compra.create({
+                        data: {
+                            anotacao: anotacao,
+                        }
+                    })];
+                case 1:
+                    _a.sent();
+                    return [2 /*return*/];
+            }
+        });
+    });
+}
+exports.createCompra = createCompra;
+var getAllCompras = function () {
+    return __awaiter(this, void 0, void 0, function () {
+        var allProdutos;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prisma.produto.findMany()];
+                case 1:
+                    allProdutos = _a.sent();
+                    return [2 /*return*/, allProdutos];
+            }
+        });
+    });
+};
+exports.getAllCompras = getAllCompras;
