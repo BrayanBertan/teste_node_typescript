@@ -14,16 +14,13 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get('/', (req: Request, res: Response) => {
-  repository.TEST().then(
-    function(value){
-      console.log(value);
-      res.send(value)
-    },
-    function(error){
-      res.send(error);
-    },
-  );
- 
+console.log('hello');
 });
+
+app.post('/categorias', (req: Request, res: Response) => {
+  app.post('/comidas', (req, res) => {
+    //repository.createCategoria(req.)
+    //res.statusCode = 200;
+  });
 
 app.listen(PORT, () => console.log(`Running on ${PORT} ⚡`));
